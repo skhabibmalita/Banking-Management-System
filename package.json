@@ -1,0 +1,21 @@
+{
+  "name": "smart-banking-system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Smart Banking & Account Management System (MERN) - simulated money only",
+  "scripts": {
+    "install:all": "npm --prefix client install && npm --prefix server install",
+    "db:up": "docker compose up -d mongo",
+    "db:down": "docker compose down",
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "dev": "concurrently -n server,client -c cyan,blue \"npm:server\" \"npm:client\"",
+    "test": "npm --prefix server test",
+    "client:build": "npm --prefix client run build",
+    "seed": "npm --prefix server run seed",
+    "seed:reset": "npm --prefix server run seed:reset"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}

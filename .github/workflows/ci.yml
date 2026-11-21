@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm --prefix server install
+      - name: Unit and API tests (no database)
+        run: npm --prefix server test
+      - name: Integration tests (in-memory MongoDB replica set)
+        run: npm --prefix server run test:db
+        timeout-minutes: 20
+
+  client:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm --prefix client install
+      - name: Production build
+        run: npm --prefix client run build
